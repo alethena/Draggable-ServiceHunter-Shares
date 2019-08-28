@@ -4,7 +4,8 @@
 Shareholder agreements are commonplace in Swiss limited companies, especially if an exit scenario is expected. Typical shareholder agreements contain 'drag-along' and 'tag-along' clauses. A drag-along clause allows a majority shareholder (defined by some quorum) to force the minority shareholders to participate in selling all company shares subject to the shareholder agreement, while the tag-along clause in turn guarantees the minority shareholders that they can always sell their shares as well if a majority shareholder sells theirs. Enforcing a drag-along clause in practice in a traditional setting can be very time consuming as all involved parties need to be contacted, need to sign an agreement and need to be paid. Facilitating this process is an ideal use case for an enhanced blockchain share.
 
 ## 2. High-Level Objectives
-Alethena has developed an ERC20 contract called `ERC20Draggable` that solves some of the main problems surrounding the drag-along process.<br>
+Alethena has developed an ERC20 contract called `ERC20Draggable` that solves some of the main problems surrounding the drag-along process.
+
 On a high-level, it offers the following functionality:
 - Given an ERC20 share token, the drag-along contract 'wraps' the share token. This means that shares can be exchanged for draggable tokens. In this process, the drag-along contract holds the wrapped shares and instead issues an equal amount of new draggable tokens.
 - If a single shareholder or a small group of them have a sufficient number of draggable tokens, they should be able to take over control of all the shares held by the draggable contract.
@@ -18,9 +19,9 @@ Important considerations:
 - The focus of this project is to facilitate the drag-along/tag-along process for all involved parties. We explicitly <b>do not try to attempt to reflect or enforce all conditions </b> found in a typical shareholder agreement as the complexity grows very quickly and the benefits would be questionable at best. It is understood that all clauses of the agreement are valid and have to be followed even if they cannot be enforced on a smart contract level.
 
 ## 3. The ERC20Claimable Contract
-It is important that share tokens (which legally represent the company's equity) don't get 'lost' if a shareholder loses the private key to their account. Alethena has previously reviewed and deployed a partial solution to this problem involving a claim mechanism. <br>
-The standard claim process works as follows:<br>
-Let us assume that Alice has lost the key to her address A. She picks a new address B and makes all calls from the new address.
+It is important that share tokens (which legally represent the company's equity) don't get 'lost' if a shareholder loses the private key to their account. Alethena has previously reviewed and deployed a partial solution to this problem involving a claim mechanism.
+
+The standard claim process works as follows: Let us assume that Alice has lost the key to her address A. She picks a new address B and makes all calls from the new address.
 1. Alice calls the function `prepareClaim`. As an argument she provides the hash of the concatenation of a user chosen nonce, her new address B and her lost address A.
 2. After waiting for 24 hours, she has a 24 hour window to call `declareLost`. This function accepts three parameters as input, the address of the collateral to be used (e.g. either token itself or XCHF), the lost address A and the nonce used in the previous step. If everything was correct, an event is emitted and the claim recorded.
 3. After waiting for 6 months (default value), Alice can call `resolveClaim` (providing her lost address as an argument A) to gain back her shares and the collateral.
