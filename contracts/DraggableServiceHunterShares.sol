@@ -1,21 +1,28 @@
- /**
- * Copyright (c) 2019 Equility AG (alethena.com)
- *
- * MIT License with Automated License Fee Payments
- *
- * Permission is hereby granted to any person obtaining a copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute,
- * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions:
- *
- * - The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- * - All automated license fee payments integrated into this and related Software are preserved.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
- * FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
+/**
+* MIT License with Automated License Fee Payments
+*
+* Copyright (c) 2019 Equility AG (alethena.com)
+*
+* Permission is hereby granted to any person obtaining a copy of this software
+* and associated documentation files (the "Software"), to deal in the Software
+* without restriction, including without limitation the rights to use, copy,
+* modify, merge, publish, distribute, sublicense, and/or sell copies of the
+* Software, and to permit persons to whom the Software is furnished to do so,
+* subject to the following conditions:
+*
+* - The above copyright notice and this permission notice shall be included in
+*   all copies or substantial portions of the Software.
+* - All automated license fee payments integrated into this and related Software
+*   are preserved.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
+*/
 pragma solidity 0.5.10;
 
 import "./ERC20Claimable.sol";
@@ -35,7 +42,7 @@ import "./ERC20Draggable.sol";
  * facilitate an update of the shareholder agreement even if a minority of the shareholders that
  * are bound to this agreement disagree. The name "draggable" stems from the convention of calling
  * the right to drag a minority along with a sale of the company "drag-along" rights. The name is
- * chosen to ensure that token-holders are aware that they are bound to such an agreement.
+ * chosen to ensure that token holders are aware that they are bound to such an agreement.
  *
  * The percentage of token holders that must agree with an update of the terms is defined by the
  * constant UPDATE_QUORUM. The precentage of yes-votes that is needed to successfully complete an
@@ -44,7 +51,6 @@ import "./ERC20Draggable.sol";
  * number of votes cast during the voting period, not taking into account those who did not bother
  * to vote.
  */
-
 
 contract DraggableServiceHunterShares is ERC20Claimable, ERC20Draggable {
 
@@ -84,7 +90,6 @@ contract DraggableServiceHunterShares is ERC20Claimable, ERC20Draggable {
     }
 
 }
-
 
 contract IClaimable {
     function setClaimable(bool) public;

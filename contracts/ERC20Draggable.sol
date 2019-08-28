@@ -1,21 +1,28 @@
 /**
- * Copyright (c) 2019 Equility AG (alethena.com)
- *
- * MIT License with Automated License Fee Payments
- *
- * Permission is hereby granted to any person obtaining a copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute,
- * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions:
- *
- * - The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- * - All automated license fee payments integrated into this and related Software are preserved.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
- * FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
+* MIT License with Automated License Fee Payments
+*
+* Copyright (c) 2019 Equility AG (alethena.com)
+*
+* Permission is hereby granted to any person obtaining a copy of this software
+* and associated documentation files (the "Software"), to deal in the Software
+* without restriction, including without limitation the rights to use, copy,
+* modify, merge, publish, distribute, sublicense, and/or sell copies of the
+* Software, and to permit persons to whom the Software is furnished to do so,
+* subject to the following conditions:
+*
+* - The above copyright notice and this permission notice shall be included in
+*   all copies or substantial portions of the Software.
+* - All automated license fee payments integrated into this and related Software
+*   are preserved.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
+*/
 pragma solidity 0.5.10;
 
 import "./IERC20.sol";
@@ -31,13 +38,13 @@ import "./IMigratable.sol";
  * @dev These tokens are based on the ERC20 standard and the open-zeppelin library.
  *
  * This is an ERC-20 token representing shares of ServiceHunter AG that are bound to
- * a shareholder agreement that can be found at [LINK TO TERMS]. The agreement is partially
- * enforced through the Swiss legal system, and partially enforced through this smart
- * contract. In particular, this smart contract implements a drag-along clause which allows
- * the majority of token holders to force the minority sell their shares along with them
- * in case of an acquisition. That's why the tokens are called "Draggable ServiceHunter AG Shares."
+ * a shareholder agreement that can be found at the URL defined in the constant 'terms'
+ * of the 'DraggableServiceHunterShares' contract. The agreement is partially enforced
+ * through the Swiss legal system, and partially enforced through this smart contract.
+ * In particular, this smart contract implements a drag-along clause which allows the
+ * majority of token holders to force the minority sell their shares along with them in
+ * case of an acquisition. That's why the tokens are called "Draggable ServiceHunter AG Shares."
  */
-
 
 contract ERC20Draggable is ERC20 {
 
@@ -72,7 +79,7 @@ contract ERC20Draggable is ERC20 {
     /**
      * CurrencyAddress specifies the currency used in acquisitions. The currency must be
      * an ERC-20 token that returns true on successful transfers and throws an exception or
-     * returns false on failure. It can only be updated later if the currency supports the 
+     * returns false on failure. It can only be updated later if the currency supports the
      * IMigratable interface.
      */
     constructor(
@@ -109,15 +116,15 @@ contract ERC20Draggable is ERC20 {
     /** Increases the number of ABV tokens. Requires minter to deposit an equal amount of share tokens */
     function wrap(address shareholder, uint256 amount) public noOfferPending() {
         require(active, "Contract not active any more.");
-        require(wrapped.balanceOf(msg.sender) >= amount, "Share balance not sufficient.");
-        require(wrapped.allowance(msg.sender, address(this)) >= amount, "Share allowance not sufficient.");
-        require(wrapped.transferFrom(msg.sender, address(this), amount), "Share transfer failed.");
+        require(wrapped.balanceOf(msg.sender) >= amount, "Share balance not sufficient");
+        require(wrapped.allowance(msg.sender, address(this)) >= amount, "Share allowance not sufficient");
+        require(wrapped.transferFrom(msg.sender, address(this), amount), "Share transfer failed");
         _mint(shareholder, amount);
     }
 
     /** Decrease the number of ABV tokens. The user gets back their shares in return */
     function unwrap(uint256 amount) public {
-        require(!active, "As long as the contract is active, you are bound to it.");
+        require(!active, "As long as the contract is active, you are bound to it");
         _burn(msg.sender, amount);
         require(wrapped.transfer(msg.sender, amount.mul(unwrapConversionFactor)), "Share transfer failed");
     }
@@ -144,15 +151,15 @@ contract ERC20Draggable is ERC20 {
         uint256 totalEquity = IShares(getWrappedContract()).totalShares();
         address buyer = msg.sender;
 
-        require(totalSupply() >= totalEquity.mul(MIN_DRAG_ALONG_QUOTA).div(10000), "This contract does not represent enough equity.");
-        require(balanceOf(buyer) >= totalEquity.mul(MIN_HOLDING).div(10000), "You need to hold at least 5% of the firm to make an offer.");
+        require(totalSupply() >= totalEquity.mul(MIN_DRAG_ALONG_QUOTA).div(10000), "This contract does not represent enough equity");
+        require(balanceOf(buyer) >= totalEquity.mul(MIN_HOLDING).div(10000), "You need to hold at least 5% of the firm to make an offer");
 
         require(currency.transferFrom(buyer, offerFeeRecipient, offerFee), "Currency transfer failed");
 
         Acquisition newOffer = new Acquisition(msg.sender, pricePerShare, acquisitionQuorum);
-        require(newOffer.isWellFunded(getCurrencyContract(), totalSupply() - balanceOf(buyer)), "Insufficient funding.");
+        require(newOffer.isWellFunded(getCurrencyContract(), totalSupply() - balanceOf(buyer)), "Insufficient funding");
         if (offerExists()) {
-            require(pricePerShare >= offer.price().mul(MIN_OFFER_INCREMENT).div(10000), "New offers must be at least 5% higher than the pending offer.");
+            require(pricePerShare >= offer.price().mul(MIN_OFFER_INCREMENT).div(10000), "New offers must be at least 5% higher than the pending offer");
             killAcquisition("Offer was replaced by a higher bid");
         }
         offer = newOffer;
@@ -179,14 +186,14 @@ contract ERC20Draggable is ERC20 {
         if (offer.hasExpired()) {
             killAcquisition("Offer expired");
         } else if (offer.quorumHasFailed()) {
-            killAcquisition("Not enough support.");
+            killAcquisition("Not enough support");
         } else if (
             !offer.isWellFunded(
                 getCurrencyContract(),
                 totalSupply().sub(balanceOf(offer.buyer()))
                 )
             ) {
-            killAcquisition("Offer was not sufficiently funded.");
+            killAcquisition("Offer was not sufficiently funded");
         } else {
             revert("Acquisition contest unsuccessful");
         }
@@ -206,8 +213,8 @@ contract ERC20Draggable is ERC20 {
 
     function completeAcquisition() public offerPending() {
         address buyer = offer.buyer();
-        require(msg.sender == buyer, "You are not authorized to complete this acquisition offer.");
-        require(offer.isQuorumReached(), "Insufficient number of yes votes.");
+        require(msg.sender == buyer, "You are not authorized to complete this acquisition offer");
+        require(offer.isQuorumReached(), "Insufficient number of yes votes");
         require(
             offer.isWellFunded(
             getCurrencyContract(),
@@ -243,7 +250,7 @@ contract ERC20Draggable is ERC20 {
     function migrate() public {
         require(active, "Contract is not active");
         address successor = msg.sender;
-        require(balanceOf(successor) >= totalSupply().mul(migrationQuorum).div(10000), "Quorum not reached.");
+        require(balanceOf(successor) >= totalSupply().mul(migrationQuorum).div(10000), "Quorum not reached");
 
         if (offerExists()) {
             if (!offer.quorumHasFailed()) {
@@ -301,11 +308,9 @@ contract ERC20Draggable is ERC20 {
 
 }
 
-
 contract IShares {
     function totalShares() public returns (uint256);
 }
-
 
 contract IBurnable {
     function burn(uint256) public;

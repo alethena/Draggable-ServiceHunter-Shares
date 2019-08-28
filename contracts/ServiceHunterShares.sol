@@ -1,21 +1,28 @@
 /**
- * Copyright (c) 2019 Equility AG (alethena.com)
- *
- * MIT License with Automated License Fee Payments
- *
- * Permission is hereby granted to any person obtaining a copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute,
- * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions:
- *
- * - The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- * - All automated license fee payments integrated into this and related Software are preserved.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
- * FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
+* MIT License with Automated License Fee Payments
+*
+* Copyright (c) 2019 Equility AG (alethena.com)
+*
+* Permission is hereby granted to any person obtaining a copy of this software
+* and associated documentation files (the "Software"), to deal in the Software
+* without restriction, including without limitation the rights to use, copy,
+* modify, merge, publish, distribute, sublicense, and/or sell copies of the
+* Software, and to permit persons to whom the Software is furnished to do so,
+* subject to the following conditions:
+*
+* - The above copyright notice and this permission notice shall be included in
+*   all copies or substantial portions of the Software.
+* - All automated license fee payments integrated into this and related Software
+*   are preserved.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
+*/
 pragma solidity 0.5.10;
 
 import "./SafeMath.sol";
@@ -23,7 +30,7 @@ import "./ERC20Claimable.sol";
 import "./Pausable.sol";
 
 /**
- * @title Alethena Shares
+ * @title ServiceHunter AG Shares
  * @author Benjamin Rickenbacher, benjamin@alethena.com
  * @author Luzius Meisser, luzius@meissereconomics.com
  * @dev These tokens are based on the ERC20 standard and the open-zeppelin library.
@@ -47,7 +54,6 @@ import "./Pausable.sol";
  * Based on code by FirstBlood: https://github.com/Firstbloodio/token/blob/master/smart_contract/FirstBloodToken.sol
  */
 
-
 contract ServiceHunterShares is ERC20Claimable, Pausable {
 
     using SafeMath for uint256;
@@ -58,7 +64,7 @@ contract ServiceHunterShares is ERC20Claimable, Pausable {
 
     uint8 public constant decimals = 0; // legally, shares are not divisible
 
-    uint256 public totalShares = 17000;       // total number of shares, maybe not all tokenized
+    uint256 public totalShares = 17000; // total number of shares, maybe not all tokenized
     uint256 public invalidTokens = 0;
 
     address[] public subregisters;
@@ -76,7 +82,7 @@ contract ServiceHunterShares is ERC20Claimable, Pausable {
      * tokens have become invalid.
      */
     function setTotalShares(uint256 _newTotalShares) public onlyOwner() {
-        require(_newTotalShares >= totalValidSupply(), "There can't be fewer tokens than shares.");
+        require(_newTotalShares >= totalValidSupply(), "There can't be fewer tokens than shares");
         totalShares = _newTotalShares;
     }
 
@@ -164,7 +170,7 @@ contract ServiceHunterShares is ERC20Claimable, Pausable {
      * called first in order to adjust the total number of shares.
      */
     function mint(address shareholder, uint256 _amount) public onlyOwner() {
-        require(totalValidSupply().add(_amount) <= totalShares, "There can't be fewer shares than valid tokens.");
+        require(totalValidSupply().add(_amount) <= totalShares, "There can't be fewer shares than valid tokens");
         _mint(shareholder, _amount);
     }
 
@@ -193,7 +199,7 @@ contract ServiceHunterShares is ERC20Claimable, Pausable {
      * having agreed with the company on the further fate of the shares in question.
      */
     function burn(uint256 _amount) public {
-        require(_amount <= balanceOf(msg.sender), "Not enough shares available.");
+        require(_amount <= balanceOf(msg.sender), "Not enough shares available");
         _transfer(msg.sender, address(this), _amount);
         _burn(address(this), _amount);
     }
@@ -204,6 +210,3 @@ contract ServiceHunterShares is ERC20Claimable, Pausable {
     }
 
 }
-
-
-

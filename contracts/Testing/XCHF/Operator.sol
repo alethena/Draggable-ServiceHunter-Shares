@@ -33,6 +33,6 @@ contract Operator is Ownable {
     }
 
     // EVENTS
-    
+
     event TransferOperator(address indexed from, address indexed to);
 }

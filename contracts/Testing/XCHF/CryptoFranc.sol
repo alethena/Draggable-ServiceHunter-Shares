@@ -1,4 +1,5 @@
 pragma solidity ^0.5.10;
+
 import "./MintableToken.sol";
 import "./MigrationAgent.sol";
 import "./Operator.sol";
@@ -34,7 +35,7 @@ contract CryptoFranc is MintableToken, MigrationAgent, Operator, InterestRateNon
         // external, separate smart contract.
         currentFullName = _initialFullName;
         announcedFullName = _initialFullName;
-        dustAmount = _dustAmount;    
+        dustAmount = _dustAmount;
         currentTerms = this;
         announcedTerms = this;
         announcedMaturityDate = block.timestamp;
@@ -71,7 +72,7 @@ contract CryptoFranc is MintableToken, MigrationAgent, Operator, InterestRateNon
         require(_newTermEndDate <= block.timestamp.add(200 days),"sanitycheck on newTermEndDate");
 
         InterestRateInterface terms = InterestRateInterface(_newTerms);
-        
+
         // ensure that _newTerms begins at the compoundLevel that the announcedTerms ends
         // they must align
         uint256 newBeginLevel = terms.getCompoundingLevelDate(newMaturityDate);
@@ -204,7 +205,7 @@ contract CryptoFranc is MintableToken, MigrationAgent, Operator, InterestRateNon
 
     /// @notice set balance of account `owner` to `_value`
     /// @param _owner The address of the account
-    /// @param _value The new balance 
+    /// @param _value The new balance
     function setBalance(address _owner, uint256 _value) internal {
         super.setBalance(_owner, _value);
         // update `owner`s compoundLevel
@@ -212,7 +213,7 @@ contract CryptoFranc is MintableToken, MigrationAgent, Operator, InterestRateNon
             // stall account release storage
             delete compoundedInterestFactor[_owner];
         } else {
-            // only update compoundedInterestFactor when value has changed 
+            // only update compoundedInterestFactor when value has changed
             // important note: for InterestRateNone the compoundedInterestFactor is newer stored because the default value for getCompoundingLevel is SCALEFACTOR
             uint256 currentLevel = getInterestRate().getCurrentCompoundingLevel();
             if (currentLevel != getCompoundingLevel(_owner)) {
