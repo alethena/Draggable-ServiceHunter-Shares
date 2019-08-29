@@ -113,7 +113,7 @@ contract ERC20Draggable is ERC20 {
         currency = IERC20(newCurrency);
     }
 
-    /** Increases the number of ABV tokens. Requires minter to deposit an equal amount of share tokens */
+    /** Increases the number of drag-along tokens. Requires minter to deposit an equal amount of share tokens */
     function wrap(address shareholder, uint256 amount) public noOfferPending() {
         require(active, "Contract not active any more.");
         require(wrapped.balanceOf(msg.sender) >= amount, "Share balance not sufficient");
@@ -122,7 +122,7 @@ contract ERC20Draggable is ERC20 {
         _mint(shareholder, amount);
     }
 
-    /** Decrease the number of ABV tokens. The user gets back their shares in return */
+    /** Decrease the number of drag-along tokens. The user gets back their shares in return */
     function unwrap(uint256 amount) public {
         require(!active, "As long as the contract is active, you are bound to it");
         _burn(msg.sender, amount);
