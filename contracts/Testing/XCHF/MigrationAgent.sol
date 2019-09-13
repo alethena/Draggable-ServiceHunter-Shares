@@ -8,7 +8,7 @@ contract MigrationAgent is Ownable {
     address public migrationFromContract; // the conttactto migate from
 
     // MODIFIERS
-    
+
     modifier onlyMigrationFromContract() {
         require(msg.sender == migrationFromContract, "Only from migration contract");
         _;
@@ -17,7 +17,7 @@ contract MigrationAgent is Ownable {
 
     // PUBLIC FUNCTIONS
 
-    /// @dev set contract to migrate to 
+    /// @dev set contract to migrate to
     /// @param _toContract Then contract address to migrate to
     function startMigrateToContract(address _toContract) public onlyOwner {
         migrationToContract = _toContract;
@@ -34,7 +34,7 @@ contract MigrationAgent is Ownable {
     }
 
     /// @dev Each user calls the migrate function on the original contract to migrate the users’ tokens to the migration agent migrateFrom on the `migrationToContract` contract
-    function migrate() public;   
+    function migrate() public;
 
     /// @dev migrageFrom is called from the migrating contract `migrationFromContract`
     /// @param _from The account to be migrated into new contract

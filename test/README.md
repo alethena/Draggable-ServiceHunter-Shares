@@ -1,4 +1,4 @@
-<h1>Drag along tests</h1>
+<h1>Drag-Along Tests</h1>
 
 <h2>1. Basic</h2>
 
@@ -7,7 +7,7 @@
 * Owner can make announcement <b>OK</b>
 * NEG - Only owner can make announcement <b>OK</b>
 
-<h4>Set claim parameters</h4>
+<h4>Set Claim Parameters</h4>
 
 * Custom claim collateral set correctly <b>OK</b>
 * Claim period set correctly <b>OK</b>
@@ -17,7 +17,7 @@
 * NEG - Can't break lower limit on claim period <b>OK</b>
  
 <h2>2. Claimable</h2>
-<h4>Claim after acquisition</h4>
+<h4>Claim After Acquisition</h4>
 
 * Equity Claim process with XCHF still works <b>OK</b>
 * Token Claim process with XCHF still works <b>OK</b>
@@ -35,7 +35,7 @@
 
 - Standard Claim Process with XCHF - Claim Tokens with XCHF <b>OK</b>
 
-<h4>Delete claims</h4>
+<h4>Delete Claims</h4>
 
 - Deleting claims works <b>OK</b>
 - NEG - Only deleter can delete claims <b>OK</b>
@@ -107,7 +107,7 @@
 - NEG - Can't migrate if contract is inactive <b>OK</b>
 - NEG - Can't migrate if quorum not reached <b>OK</b>
 
-<h4>Standard process</h4>
+<h4>Standard Process</h4>
 
 - Early completion with absolute quorum <b>OK</b>
   - Offer is made
@@ -139,8 +139,7 @@
 * Changing vote from no to yes <b>OK</b>
 * Votes change when shares are transferred <b>OK</b>
 
-
-<h4>Wrap negative tests</h4>
+<h4>Wrap Negative Tests</h4>
 
 - NEG - Can't wrap if contract is inactive <b>OK</b>
 - NEG - Can't wrap if share balance insufficient <b>OK</b>

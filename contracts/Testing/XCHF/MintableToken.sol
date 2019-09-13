@@ -20,7 +20,7 @@ contract MintableToken is PausableToken
 
     modifier onlyMinter {
         assert(msg.sender == minter);
-        _; 
+        _;
     }
 
     constructor() public {
@@ -77,7 +77,7 @@ contract MintableToken is PausableToken
         emit Transfer(address(0), _to, _value);
     }
 
-    /// @dev helper function to update token supply state and emit events 
+    /// @dev helper function to update token supply state and emit events
     /// @notice checkMintOrBurn for account `_owner` tokens chainging  from `_balanceBefore` to `_balanceAfter`
     /// @param _owner The address of the owner
     /// @param _balanceBefore The balance before the transaction
@@ -100,7 +100,7 @@ contract MintableToken is PausableToken
     // PRIVATE FUNCTIONS
 
     // EVENTS
-    
+
     event TransferMinter(address indexed from, address indexed to);
 }
 

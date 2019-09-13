@@ -39,8 +39,8 @@ contract ERC20Token is Ownable, ERC20Interface {
     * race condition is to first reduce the spender's allowance to 0 and set the desired value afterwards:
     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
     */
-   
-    /// @notice `msg.sender` approves `_spender` to spend `_value` tokens   
+
+    /// @notice `msg.sender` approves `_spender` to spend `_value` tokens
     /// @param _spender The address of the account able to transfer the tokens
     /// @param _value The amount of tokens to be approved for transfer
     /// @return Whether the approval was successful or not
@@ -81,10 +81,10 @@ contract ERC20Token is Ownable, ERC20Interface {
 
     // INTERNAL FUNCTIONS
 
-    /// @notice internal send `_value` token to `_to` from `_from` 
+    /// @notice internal send `_value` token to `_to` from `_from`
     /// @param _from The address of the sender (null check performed in subTokens)
     /// @param _to The address of the recipient (null check performed in addTokens)
-    /// @param _value The amount of token to be transferred 
+    /// @param _value The amount of token to be transferred
     /// @return Whether the transfer was successful or not
     function transferInternal(address _from, address _to, uint256 _value) internal returns (bool) {
         uint256 value = subTokens(_from, _value);
@@ -92,7 +92,7 @@ contract ERC20Token is Ownable, ERC20Interface {
         emit Transfer(_from, _to, value);
         return true;
     }
-   
+
     /// @notice add tokens `_value` tokens to `owner`
     /// @param _owner The address of the account
     /// @param _value The amount of tokens to be added
@@ -102,10 +102,10 @@ contract ERC20Token is Ownable, ERC20Interface {
     /// @param _owner The address of the account
     /// @param _value The amount of tokens to be subtracted
     function subTokens(address _owner, uint256 _value) internal returns (uint256 _valueDeducted );
-    
+
     /// @notice set balance of account `owner` to `_value`
     /// @param _owner The address of the account
-    /// @param _value The new balance 
+    /// @param _value The new balance
     function setBalance(address _owner, uint256 _value) internal notNull(_owner) {
         balances[_owner] = _value;
     }
