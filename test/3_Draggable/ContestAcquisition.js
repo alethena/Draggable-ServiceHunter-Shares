@@ -114,7 +114,7 @@ contract('Draggable - Contest Acquisition', accounts => {
     // Offer can be killed
     const tx = await Draggable.contestAcquisition();
     const offerExists = await Draggable.offerExists();
-    checkEvents(offerExists, tx, 'Not enough support.');
+    checkEvents(offerExists, tx, 'Not enough support');
   });
 
   it('Contest works if relative quorum has failed', async () => {
@@ -142,7 +142,7 @@ contract('Draggable - Contest Acquisition', accounts => {
     // Offer can now be killed
     const tx = await Draggable.contestAcquisition();
     const offerExists = await Draggable.offerExists();
-    checkEvents(offerExists, tx, 'Not enough support.');
+    checkEvents(offerExists, tx, 'Not enough support');
   });
 
   it('Contest works if funding insufficient (balance)', async () => {
@@ -166,7 +166,7 @@ contract('Draggable - Contest Acquisition', accounts => {
     // Offer can be killed
     const tx = await Draggable.contestAcquisition();
     const offerExists = await Draggable.offerExists();
-    checkEvents(offerExists, tx, 'Offer was not sufficiently funded.');
+    checkEvents(offerExists, tx, 'Offer was not sufficiently funded');
   });
 
   it('Contest works if funding insufficient (allowance)', async () => {
@@ -189,7 +189,7 @@ contract('Draggable - Contest Acquisition', accounts => {
     // Offer can be killed
     const tx = await Draggable.contestAcquisition();
     const offerExists = await Draggable.offerExists();
-    checkEvents(offerExists, tx, 'Offer was not sufficiently funded.');
+    checkEvents(offerExists, tx, 'Offer was not sufficiently funded');
   });
 
   it("NEG - Can't contest a good offer (before vote ended)", async () => {
