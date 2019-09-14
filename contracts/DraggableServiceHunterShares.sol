@@ -56,7 +56,7 @@ contract DraggableServiceHunterShares is ERC20Claimable, ERC20Draggable {
 
     string public constant symbol = "DSHS";
     string public constant name = "Draggable ServiceHunter AG Shares";
-    string public constant terms = "quitt.ch/ir";
+    string public constant terms = "quitt.ch/investoren";
 
     uint8 public constant decimals = 0;                  // shares are not divisible
 

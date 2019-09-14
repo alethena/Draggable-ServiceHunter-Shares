@@ -60,11 +60,11 @@ contract ServiceHunterShares is ERC20Claimable, Pausable {
 
     string public constant symbol = "SHS";
     string public constant name = "ServiceHunter AG Shares";
-    string public constant terms = "quitt.ch/ir";
+    string public constant terms = "quitt.ch/investoren";
 
     uint8 public constant decimals = 0; // legally, shares are not divisible
 
-    uint256 public totalShares = 17000; // total number of shares, maybe not all tokenized
+    uint256 public totalShares = 15647; // total number of shares, maybe not all tokenized
     uint256 public invalidTokens = 0;
 
     address[] public subregisters;
